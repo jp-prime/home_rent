@@ -164,6 +164,7 @@ export const propertySchema = {
         { name: 'kakaoId', title: '카카오톡 ID', type: 'string' },
         { name: 'zaloPhone', title: 'Zalo / 전화번호', type: 'string' },
         { name: 'phone', title: '연락처', type: 'string' },
+        { name: 'verified', title: '인증된 중개사 뱃지 표시', type: 'boolean', initialValue: true },
       ],
     },
   ],
