@@ -1,6 +1,7 @@
 import { createClient } from '@sanity/client';
 import { createImageUrlBuilder } from '@sanity/image-url';
 import { Property } from '../types';
+import { findCoordinatesFromAddress } from '../utils/geo';
 
 // Sanity 프로젝트 ID와 데이터셋 설정
 // Vercel 환경 변수나 .env 파일의 VITE_SANITY_PROJECT_ID, VITE_SANITY_DATASET 값을 읽어옵니다.
@@ -70,6 +71,22 @@ export function transformSanityProperty(item: any): Property {
     ? item.images.map((img: any) => urlForImage(img)).filter(Boolean)
     : [];
 
+  // 주소/상세주소/지역명/지역구 텍스트에서 랜드마크 키워드로 좌표 자동 인식
+  const fullText = `${item.detailedAddress || ''} ${item.address || ''} ${item.region || ''} ${item.district || ''}`;
+  const autoCoords = findCoordinatesFromAddress(fullText);
+
+  // 주소에 동네나 랜드마크(냐베, 사데코, 푸미흥, 타오디엔 등)가 감지되면 해당 좌표로 자동 업데이트!
+  let finalLat = Number(item.lat);
+  let finalLng = Number(item.lng);
+
+  if (autoCoords) {
+    finalLat = autoCoords.lat;
+    finalLng = autoCoords.lng;
+  } else if (!finalLat || !finalLng) {
+    finalLat = 10.7769; // 기본 호치민 1군 중심 좌표
+    finalLng = 106.7009;
+  }
+
   return {
     id: item._id,
     category: item.category || '아파트',
@@ -83,8 +100,8 @@ export function transformSanityProperty(item: any): Property {
     address: item.address || '',
     detailedAddress: item.detailedAddress || '',
     region: item.region || '',
-    lat: Number(item.lat) || 10.7769, // 기본 호치민 좌표
-    lng: Number(item.lng) || 106.7009,
+    lat: finalLat,
+    lng: finalLng,
     areaPyeong: item.areaPyeong ? Number(item.areaPyeong) : (item.areaM2 ? Math.round(Number(item.areaM2) / 3.3) : 0),
     areaM2: Number(item.areaM2) || 0,
     floor: item.floor || '',
