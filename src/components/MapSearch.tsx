@@ -217,7 +217,7 @@ export const MapSearch: React.FC<MapSearchProps> = ({
 
           {/* Category Quick Pills */}
           <div className="flex items-center gap-1 shrink-0">
-            {(['전체', '아파트', '빌라', '원룸', '오피스텔', '건물'] as PropertyCategory[]).map((cat) => (
+            {(['전체', '아파트', '빌라', '주택/단독', '원룸', '오피스텔', '건물'] as PropertyCategory[]).map((cat) => (
               <button
                 key={cat}
                 onClick={() => onSelectCategory(cat)}

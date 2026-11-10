@@ -20,6 +20,7 @@ export const propertySchema = {
         list: [
           { title: '아파트', value: '아파트' },
           { title: '빌라', value: '빌라' },
+          { title: '주택/단독', value: '주택/단독' },
           { title: '원룸', value: '원룸' },
           { title: '오피스텔', value: '오피스텔' },
           { title: '건물', value: '건물' },

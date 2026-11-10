@@ -1,6 +1,6 @@
-export type PropertyCategory = '전체' | '아파트' | '빌라' | '원룸' | '오피스텔' | '건물';
+export type PropertyCategory = '전체' | '아파트' | '빌라' | '주택/단독' | '원룸' | '오피스텔' | '건물';
 
-export type SpecificCategory = '아파트' | '빌라' | '원룸' | '오피스텔' | '건물';
+export type SpecificCategory = '아파트' | '빌라' | '주택/단독' | '원룸' | '오피스텔' | '건물';
 
 export type TransactionType = '전체' | '월세' | '전세' | '매매';
 

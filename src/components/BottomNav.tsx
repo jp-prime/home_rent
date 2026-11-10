@@ -14,8 +14,9 @@ interface BottomNavProps {
 const CATEGORIES: { label: PropertyCategory; desc: string }[] = [
   { label: '전체', desc: '모든 매물' },
   { label: '아파트', desc: '단지·주상복합' },
-  { label: '빌라', desc: '연립·다세대' },
-  { label: '원룸', desc: '원룸·투룸' },
+  { label: '빌라', desc: '빌라·타운하우스' },
+  { label: '주택/단독', desc: '단독주택·전원주택' },
+  { label: '원룸', desc: '원룸·스튜디오' },
   { label: '오피스텔', desc: '주거·업무용' },
   { label: '건물', desc: '상가·빌딩·사옥' },
 ];

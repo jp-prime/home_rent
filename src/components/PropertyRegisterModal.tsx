@@ -276,8 +276,8 @@ export const PropertyRegisterModal: React.FC<PropertyRegisterModalProps> = ({
             <label className="font-bold text-neutral-800 block mb-1.5">
               2. 매물 종류 선택 <span className="text-rose-500">*</span>
             </label>
-            <div className="grid grid-cols-5 gap-1.5">
-              {(['아파트', '빌라', '원룸', '오피스텔', '건물'] as SpecificCategory[]).map((cat) => (
+            <div className="grid grid-cols-3 sm:grid-cols-6 gap-1.5">
+              {(['아파트', '빌라', '주택/단독', '원룸', '오피스텔', '건물'] as SpecificCategory[]).map((cat) => (
                 <button
                   type="button"
                   key={cat}

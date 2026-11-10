@@ -101,14 +101,15 @@ export const HomeView: React.FC<HomeViewProps> = ({
     .sort((a, b) => (a.distanceKm ?? 9999) - (b.distanceKm ?? 9999))
     .slice(0, 4);
 
-  // Category items with count
+  // Category items with count (매물등록 카테고리와 100% 일치)
   const CATEGORY_ITEMS: { key: PropertyCategory; name: string; count: number }[] = [
     { key: '전체', name: '전체보기', count: properties.length },
     { key: '아파트', name: '아파트', count: properties.filter((p) => p.category === '아파트').length },
-    { key: '빌라', name: '빌라·단독', count: properties.filter((p) => p.category === '빌라').length },
-    { key: '원룸', name: '원룸·스튜디오', count: properties.filter((p) => p.category === '원룸').length },
+    { key: '빌라', name: '빌라', count: properties.filter((p) => p.category === '빌라').length },
+    { key: '주택/단독', name: '주택/단독', count: properties.filter((p) => p.category === '주택/단독').length },
+    { key: '원룸', name: '원룸', count: properties.filter((p) => p.category === '원룸').length },
     { key: '오피스텔', name: '오피스텔', count: properties.filter((p) => p.category === '오피스텔').length },
-    { key: '건물', name: '건물·상가', count: properties.filter((p) => p.category === '건물').length },
+    { key: '건물', name: '건물', count: properties.filter((p) => p.category === '건물').length },
   ];
 
   // Helper to render title with [위치] prominently in the front as requested
