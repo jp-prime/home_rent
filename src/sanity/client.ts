@@ -14,7 +14,7 @@ export const sanityClient = createClient({
   projectId: projectId || 'demo-placeholder',
   dataset,
   apiVersion,
-  useCdn: true, // 빠른 조회를 위해 CDN 캐시 사용
+  useCdn: false, // 실시간 수정 사항이 즉시 웹사이트에 반영되도록 CDN 캐시 끄기
 });
 
 const imageBuilder = createImageUrlBuilder(sanityClient);

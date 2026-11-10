@@ -53,7 +53,7 @@ export const propertySchema = {
       validation: (Rule: any) => Rule.required(),
     },
 
-    // 2. 가격 정보 (VND 베트남동 기준 - 간소화)
+    // 2. 가격 정보 (VND 베트남동 기준)
     {
       name: 'priceLabel',
       title: '월세 / 가격 (VND)',
@@ -69,6 +69,18 @@ export const propertySchema = {
       initialValue: '2개월(7000만동)',
       validation: (Rule: any) => Rule.required(),
     },
+    {
+      name: 'monthlyRent',
+      title: '월세 (선택)',
+      type: 'string',
+      description: '필요 시 별도 기재',
+    },
+    {
+      name: 'shortPrice',
+      title: '요약 가격 (선택)',
+      type: 'string',
+      description: '미입력 시 월세/가격이 자동으로 사용됩니다',
+    },
 
     // 3. 매물 사진 (여러 장 드래그&드롭)
     {
@@ -82,9 +94,21 @@ export const propertySchema = {
     // 4. 위치 정보
     {
       name: 'address',
-      title: '주소 또는 아파트 단지명',
+      title: '주소 또는 도로명',
       type: 'string',
-      description: '예: Masteri Thao Dien, 159 Xa lo Ha Noi',
+      description: '예: 159 Xa lo Ha Noi, Thao Dien',
+    },
+    {
+      name: 'detailedAddress',
+      title: '상세 주소 (건물명, 동/호수 등)',
+      type: 'string',
+      description: '예: KDC Sadeco Phước Kiển, Xã Nhà Bè, TPHCM',
+    },
+    {
+      name: 'region',
+      title: '지역명 (동/군)',
+      type: 'string',
+      description: '예: 호치민 7군 냐베',
     },
     {
       name: 'lat',
@@ -127,6 +151,12 @@ export const propertySchema = {
       type: 'string',
       description: '예: 150만동 또는 관리비 포함',
       initialValue: '포함',
+    },
+    {
+      name: 'parking',
+      title: '주차 가능 여부',
+      type: 'string',
+      initialValue: '가능 (월 주차비 별도)',
     },
     {
       name: 'moveInDate',
