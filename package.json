@@ -7,11 +7,15 @@
     "dev": "vite --port=3000 --host=0.0.0.0",
     "build": "vite build",
     "preview": "vite preview",
+    "studio": "sanity dev --port 3333",
+    "studio:deploy": "sanity deploy",
     "clean": "rm -rf dist server.js",
     "lint": "tsc --noEmit"
   },
   "dependencies": {
     "@google/genai": "^2.4.0",
+    "@sanity/client": "^8.15.1",
+    "@sanity/image-url": "^2.1.1",
     "@tailwindcss/vite": "^4.3.3",
     "@types/leaflet": "^1.9.22",
     "@vitejs/plugin-react": "^6.1.1",
@@ -25,14 +29,17 @@
     "vite": "^8.3.0"
   },
   "devDependencies": {
+    "@sanity/structure": "^2.36.2",
+    "@types/express": "^4.17.21",
     "@types/node": "^22.14.0",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
     "autoprefixer": "^10.4.21",
     "esbuild": "^0.25.0",
+    "sanity": "^6.23.0",
+    "styled-components": "^6.6.0",
     "tailwindcss": "^4.3.3",
     "tsx": "^4.21.0",
-    "typescript": "^7.0.2",
-    "@types/express": "^4.17.21"
+    "typescript": "^7.0.2"
   }
 }

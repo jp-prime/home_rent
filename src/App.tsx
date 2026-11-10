@@ -18,6 +18,7 @@ import { MapSearch } from './components/MapSearch';
 import { PropertyDetail } from './components/PropertyDetail';
 import { PropertyRegisterModal } from './components/PropertyRegisterModal';
 import { FavoritesModal } from './components/FavoritesModal';
+import { fetchSanityProperties, isSanityConfigured } from './sanity/client';
 
 export default function App() {
   // Properties state initialized with local storage or initial Ho Chi Minh sample data
@@ -75,6 +76,33 @@ export default function App() {
   const [isFavoritesOpen, setIsFavoritesOpen] = useState(false);
   const [isGpsLoading, setIsGpsLoading] = useState(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
+  const [isSanityLoading, setIsSanityLoading] = useState(false);
+
+  // Sanity CMS 연동: 설정되어 있다면 Sanity에서 실시간 매물 목록 불러오기
+  useEffect(() => {
+    if (!isSanityConfigured) return;
+
+    let isMounted = true;
+    setIsSanityLoading(true);
+
+    fetchSanityProperties()
+      .then((sanityProps) => {
+        if (!isMounted) return;
+        if (sanityProps && sanityProps.length > 0) {
+          setProperties(sanityProps);
+        }
+      })
+      .catch((err) => {
+        console.error('Sanity 매물 불러오기 실패 (기본 데이터 사용):', err);
+      })
+      .finally(() => {
+        if (isMounted) setIsSanityLoading(false);
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   // Sync to local storage
   useEffect(() => {
