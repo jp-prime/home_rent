@@ -105,15 +105,17 @@ export const MapSearch: React.FC<MapSearchProps> = ({
       .addTo(map)
       .bindTooltip('내 위치', { permanent: false, direction: 'top', offset: [0, -10] });
 
-    // 1.5km search radius circle
-    userCircleRef.current = L.circle([userLocation.lat, userLocation.lng], {
-      radius: 1200,
-      color: '#3b82f6',
-      fillColor: '#93c5fd',
-      fillOpacity: 0.08,
-      weight: 1,
-      dashArray: '4, 4',
-    }).addTo(map);
+    // 실제 GPS 권한이 켜졌을 때만 1.5km 반경 원 표시
+    if (userLocation.isRealGps) {
+      userCircleRef.current = L.circle([userLocation.lat, userLocation.lng], {
+        radius: 1200,
+        color: '#3b82f6',
+        fillColor: '#93c5fd',
+        fillOpacity: 0.08,
+        weight: 1,
+        dashArray: '4, 4',
+      }).addTo(map);
+    }
   }, [userLocation]);
 
   // Update Property Markers
@@ -175,6 +177,11 @@ export const MapSearch: React.FC<MapSearchProps> = ({
     if (filteredProperties.length > 0) {
       if (!selectedPropertyId || !filteredProperties.some((p) => p.id === selectedPropertyId)) {
         setSelectedPropertyId(filteredProperties[0].id);
+      }
+      // 등록된 매물 위치로 지도 시점(카메라) 자동 이동!
+      const target = filteredProperties.find((p) => p.id === selectedPropertyId) || filteredProperties[0];
+      if (target && target.lat && target.lng) {
+        map.setView([target.lat, target.lng], 15);
       }
     } else {
       setSelectedPropertyId(null);
