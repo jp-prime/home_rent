@@ -13,6 +13,71 @@
 }
 
 /* Custom leaflet marker pin styling */
+.custom-property-card-pin {
+  position: relative;
+  background: #1e293b;
+  color: #ffffff;
+  border-radius: 8px;
+  padding: 4px 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25), 0 0 0 1.5px rgba(255, 255, 255, 0.9);
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 66px;
+}
+
+.custom-property-card-pin:hover,
+.custom-property-card-pin.active {
+  background: #2563eb;
+  transform: scale(1.1) translateY(-3px);
+  box-shadow: 0 8px 20px rgba(37, 99, 235, 0.4), 0 0 0 2px #ffffff;
+  z-index: 1000 !important;
+}
+
+.custom-property-card-pin .pin-price {
+  font-size: 11px;
+  font-weight: 800;
+  line-height: 1.2;
+  white-space: nowrap;
+  letter-spacing: -0.3px;
+}
+
+.custom-property-card-pin .pin-category {
+  font-size: 9px;
+  font-weight: 600;
+  color: #fbbf24;
+  line-height: 1.1;
+  margin-top: 1px;
+  white-space: nowrap;
+}
+
+.custom-property-card-pin:hover .pin-category,
+.custom-property-card-pin.active .pin-category {
+  color: #ffffff;
+}
+
+.custom-property-card-pin .pin-arrow {
+  position: absolute;
+  bottom: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 5px solid #1e293b;
+  transition: border-top-color 0.2s;
+}
+
+.custom-property-card-pin:hover .pin-arrow,
+.custom-property-card-pin.active .pin-arrow {
+  border-top-color: #2563eb;
+}
+
 .custom-price-pin {
   background: white;
   color: #171717;

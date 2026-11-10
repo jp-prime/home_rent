@@ -128,24 +128,33 @@ export const MapSearch: React.FC<MapSearchProps> = ({
     filteredProperties.forEach((item) => {
       const isSelected = item.id === selectedPropertyId;
 
+      // 가격을 읽기 편한 베트남동(VND) 한글 단위로 포맷팅 (예: 35000000 -> 3,500만동)
+      const rawPrice = item.shortPrice || item.priceLabel || '';
+      let displayPrice = rawPrice;
+      const cleanDigits = rawPrice.replace(/[^0-9]/g, '');
+      if (cleanDigits && !/[만억동]/.test(rawPrice)) {
+        const num = Number(cleanDigits);
+        if (num >= 100000000) {
+          displayPrice = `${(num / 100000000).toFixed(1).replace(/\.0$/, '')}억동`;
+        } else if (num >= 10000) {
+          displayPrice = `${Math.round(num / 10000).toLocaleString()}만동`;
+        }
+      }
+
+      // 상단: 가격 / 하단: 카테고리 2단 프리미엄 마커
       const markerHtml = `
-        <div class="custom-price-pin ${isSelected ? 'active' : ''}">
-          <span style="display:inline-block; width:6px; height:6px; border-radius:9999px; background-color:${
-            item.transactionType === '월세'
-              ? '#f97316'
-              : item.transactionType === '전세'
-              ? '#0284c7'
-              : '#16a34a'
-          };"></span>
-          <span>${item.shortPrice}</span>
+        <div class="custom-property-card-pin ${isSelected ? 'active' : ''}">
+          <div class="pin-price">${displayPrice}</div>
+          <div class="pin-category">${item.category}</div>
+          <div class="pin-arrow"></div>
         </div>
       `;
 
       const customIcon = L.divIcon({
         className: 'custom-leaflet-price-marker',
         html: markerHtml,
-        iconSize: [80, 28],
-        iconAnchor: [40, 14],
+        iconSize: [80, 42],
+        iconAnchor: [40, 42],
       });
 
       const marker = L.marker([item.lat, item.lng], {
@@ -155,7 +164,8 @@ export const MapSearch: React.FC<MapSearchProps> = ({
         .addTo(map)
         .on('click', () => {
           setSelectedPropertyId(item.id);
-          map.panTo([item.lat, item.lng], { animate: true, duration: 0.4 });
+          // 핀 클릭 시 즉시 해당 매물 상세페이지로 이동!
+          onSelectProperty(item);
         });
 
       markersRef.current[item.id] = marker;
@@ -246,7 +256,7 @@ export const MapSearch: React.FC<MapSearchProps> = ({
 
       {/* Bottom Floating Property Card Sheet */}
       {activeProperty ? (
-        <div className="absolute bottom-2 left-2 right-2 sm:left-4 sm:right-4 z-[1000] max-w-lg mx-auto">
+        <div className="absolute bottom-24 left-2 right-2 sm:left-4 sm:right-4 z-[1000] max-w-lg mx-auto">
           <div
             onClick={() => onSelectProperty(activeProperty)}
             className="bg-white rounded-2xl p-3 shadow-xl border border-neutral-200/80 flex gap-3 cursor-pointer hover:border-neutral-400 transition-all active:scale-[0.99]"
