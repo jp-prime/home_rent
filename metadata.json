@@ -1,0 +1,6 @@
+{
+  "name": "초이스홈 - 호치민 모바일 부동산 & 임대 정보",
+  "description": "초이스홈(ChoiceHome): 호치민 1군, 2군 타오디엔, 7군 푸미흥, 빈탄군 특화 모바일 부동산 매물 및 임대 정보, 위치 기반 추천, 지도 검색 및 카카오톡/Zalo 직통 연결",
+  "requestFramePermissions": ["geolocation"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
