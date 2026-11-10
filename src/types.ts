@@ -20,21 +20,21 @@ export interface Property {
   transactionType: '월세' | '전세' | '매매';
   district: string; // e.g. "호치민 1군", "호치민 2군", "호치민 7군", "호치민 빈탄군"
   title: string;
-  deposit: number; // in 만원 or USD / converted
-  monthlyRent?: number; // in 만원 or USD / converted
-  priceLabel: string; // e.g. "월세 $1,200 (약 160만)" or "월세 1,000 / 95"
-  shortPrice: string; // e.g. "$1,200/월", "1000/95"
+  deposit: number | string; // e.g. "2개월(7000만동)" or number
+  monthlyRent?: number | string;
+  priceLabel: string; // e.g. "월 3,500만동"
+  shortPrice: string; // e.g. "3,500만동"
   address: string;
   detailedAddress?: string;
-  region: string; // e.g. "호치민시 1군 벤타인"
+  region: string;
   lat: number;
   lng: number;
-  areaPyeong: number; // 평
-  areaM2: number; // m²
-  floor: string; // e.g. "12층 / 25층"
-  roomCount: string; // e.g. "방 2 · 욕실 2"
-  direction?: string; // e.g. "남동향 (사이공강 뷰)"
-  maintenanceFee: number; // 만원 (또는 USD)
+  areaPyeong?: number;
+  areaM2: number;
+  floor: string;
+  roomCount: string;
+  direction?: string;
+  maintenanceFee?: number | string;
   maintenanceFeeIncludes: string[];
   parking: string;
   moveInDate: string;

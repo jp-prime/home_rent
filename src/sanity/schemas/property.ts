@@ -1,14 +1,15 @@
-// Sanity Studio 매물(Property) 스키마 정의
+// Sanity Studio 간소화된 매물(Property) 스키마 정의 (화폐: VND 베트남동)
 export const propertySchema = {
   name: 'property',
   title: '매물 관리 (Properties)',
   type: 'document',
   fields: [
+    // 1. 기본 정보
     {
       name: 'title',
       title: '매물 제목',
       type: 'string',
-      description: '예: [호치민 2군] 타오디엔 럭셔리 리버뷰 아파트',
+      description: '예: [2군 타오디엔] 마스테리 리버뷰 고층 풀옵션',
       validation: (Rule: any) => Rule.required(),
     },
     {
@@ -35,8 +36,8 @@ export const propertySchema = {
       options: {
         list: [
           { title: '월세', value: '월세' },
-          { title: '전세', value: '전세' },
           { title: '매매', value: '매매' },
+          { title: '전세', value: '전세' },
         ],
         layout: 'radio',
       },
@@ -47,36 +48,28 @@ export const propertySchema = {
       name: 'district',
       title: '지역구',
       type: 'string',
-      description: '예: 호치민 1군, 호치민 2군(타오디엔), 호치민 7군(푸미흥), 빈탄군',
+      description: '예: 호치민 2군 (타오디엔), 호치민 7군 (푸미흥), 1군, 빈탄군',
       validation: (Rule: any) => Rule.required(),
     },
+
+    // 2. 가격 정보 (VND 베트남동 기준 - 간소화)
     {
       name: 'priceLabel',
-      title: '표시 가격',
+      title: '월세 / 가격 (VND)',
       type: 'string',
-      description: '예: 월세 $1,200 (약 160만) 또는 전세 3억 5,000',
-      validation: (Rule: any) => Rule.required(),
-    },
-    {
-      name: 'shortPrice',
-      title: '요약 가격 (카드에 표시)',
-      type: 'string',
-      description: '예: $1,200/월 또는 1000/95',
+      description: '예: 월 3,500만동 또는 3500만동 / 매매 65억동',
       validation: (Rule: any) => Rule.required(),
     },
     {
       name: 'deposit',
-      title: '보증금 (숫자)',
-      type: 'number',
-      description: '단위: 만원 또는 USD (예: 2400)',
+      title: '보증금 (한글 자유 입력)',
+      type: 'string',
+      description: '예: 2개월(7000만동), 1개월(3500만동), 2개월분(협의가능)',
+      initialValue: '2개월(7000만동)',
       validation: (Rule: any) => Rule.required(),
     },
-    {
-      name: 'monthlyRent',
-      title: '월세 (숫자)',
-      type: 'number',
-      description: '월세인 경우 입력 (예: 1200)',
-    },
+
+    // 3. 매물 사진 (여러 장 드래그&드롭)
     {
       name: 'images',
       title: '매물 사진들',
@@ -84,89 +77,55 @@ export const propertySchema = {
       of: [{ type: 'image', options: { hotspot: true } }],
       description: '첫 번째 사진이 대표 썸네일로 사용됩니다.',
     },
+
+    // 4. 위치 정보
     {
       name: 'address',
-      title: '도로명 주소',
+      title: '주소 또는 아파트 단지명',
       type: 'string',
-      description: '예: 159 Xa lo Ha Noi, Thao Dien',
-    },
-    {
-      name: 'detailedAddress',
-      title: '상세 주소 (동/호수)',
-      type: 'string',
-      description: '예: Masteri Thao Dien T5동 1802호',
-    },
-    {
-      name: 'region',
-      title: '동/지역명',
-      type: 'string',
-      description: '예: 호치민시 2군 타오디엔',
+      description: '예: Masteri Thao Dien, 159 Xa lo Ha Noi',
     },
     {
       name: 'lat',
-      title: '위도 (Latitude)',
+      title: '위도 (선택)',
       type: 'number',
-      description: '지도 표시용 위도 (예: 10.8035)',
-      initialValue: 10.7769,
+      description: '지도 핀 위치 (미입력 시 기본 호치민 중심 좌표)',
+      initialValue: 10.8035,
     },
     {
       name: 'lng',
-      title: '경도 (Longitude)',
+      title: '경도 (선택)',
       type: 'number',
-      description: '지도 표시용 경도 (예: 106.7381)',
-      initialValue: 106.7009,
+      description: '지도 핀 위치',
+      initialValue: 106.7381,
     },
-    {
-      name: 'areaPyeong',
-      title: '전용면적 (평)',
-      type: 'number',
-      description: '예: 25',
-    },
+
+    // 5. 매물 구조 및 상세
     {
       name: 'areaM2',
       title: '전용면적 (m²)',
       type: 'number',
-      description: '예: 82.5',
-    },
-    {
-      name: 'floor',
-      title: '해당층 / 전체층',
-      type: 'string',
-      description: '예: 12층 / 25층 또는 고층 / 30층',
+      description: '예: 75 (m² 입력 시 평수는 자동 계산됩니다)',
     },
     {
       name: 'roomCount',
       title: '방 및 욕실 수',
       type: 'string',
       description: '예: 방 2 · 욕실 2',
+      initialValue: '방 2 · 욕실 2',
     },
     {
-      name: 'direction',
-      title: '방향 / 뷰',
+      name: 'floor',
+      title: '층수',
       type: 'string',
-      description: '예: 남동향 (사이공강 뷰)',
+      description: '예: 15층 / 25층 또는 고층',
     },
     {
       name: 'maintenanceFee',
       title: '관리비',
-      type: 'number',
-      description: '예: 8 (만원) 또는 USD 기준',
-    },
-    {
-      name: 'maintenanceFeeIncludes',
-      title: '관리비 포함 항목',
-      type: 'array',
-      of: [{ type: 'string' }],
-      options: {
-        layout: 'tags',
-      },
-      description: '예: 인터넷, 수도세, 수영장, 헬스장',
-    },
-    {
-      name: 'parking',
-      title: '주차 가능 여부',
       type: 'string',
-      initialValue: '가능 (월 주차비 별도)',
+      description: '예: 150만동 또는 관리비 포함',
+      initialValue: '포함',
     },
     {
       name: 'moveInDate',
@@ -174,12 +133,14 @@ export const propertySchema = {
       type: 'string',
       initialValue: '즉시 입주',
     },
+
+    // 6. 상세 설명 & 특징
     {
       name: 'description',
       title: '매물 상세 설명',
       type: 'text',
-      rows: 5,
-      description: '매물의 장점, 편의시설, 주변 인프라 등을 자세히 입력하세요.',
+      rows: 4,
+      description: '옵션 상태, 뷰, 주변 편의시설 등 안내글을 적어주세요.',
     },
     {
       name: 'features',
@@ -189,20 +150,20 @@ export const propertySchema = {
       options: {
         layout: 'tags',
       },
-      description: '예: 풀옵션, 강변뷰, 역세권, 신축, 수영장, 피트니스',
+      description: '예: 풀옵션, 리버뷰, 수영장, 역세권, 신축',
     },
+
+    // 7. 담당자 정보
     {
       name: 'agent',
       title: '담당 공인중개사 정보',
       type: 'object',
       fields: [
-        { name: 'name', title: '중개사 성함', type: 'string', initialValue: '김에이전트' },
-        { name: 'agencyName', title: '부동산 상호명', type: 'string', initialValue: '호치민 글로벌 부동산' },
+        { name: 'name', title: '중개사 성함', type: 'string', initialValue: '김부장' },
+        { name: 'agencyName', title: '부동산 상호', type: 'string', initialValue: '호치민 글로벌 부동산' },
         { name: 'kakaoId', title: '카카오톡 ID', type: 'string' },
         { name: 'zaloPhone', title: 'Zalo / 전화번호', type: 'string' },
         { name: 'phone', title: '연락처', type: 'string' },
-        { name: 'verified', title: '인증된 중개사 여부', type: 'boolean', initialValue: true },
-        { name: 'avatar', title: '프로필 사진', type: 'image' },
       ],
     },
   ],

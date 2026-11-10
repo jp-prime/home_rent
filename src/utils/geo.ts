@@ -38,14 +38,18 @@ export function formatDistance(km?: number): string {
  * Format Korean currency amount in 만원 to readable Korean text.
  * e.g., 85000 -> 8억 5,000만원, 1000 -> 1,000만원
  */
-export function formatKoreanPrice(manwon: number): string {
-  if (manwon >= 10000) {
-    const eok = Math.floor(manwon / 10000);
-    const remainder = manwon % 10000;
+export function formatKoreanPrice(val?: number | string): string {
+  if (val === undefined || val === null || val === '') return '';
+  if (typeof val === 'string') {
+    return val;
+  }
+  if (val >= 10000) {
+    const eok = Math.floor(val / 10000);
+    const remainder = val % 10000;
     if (remainder === 0) {
       return `${eok}억원`;
     }
     return `${eok}억 ${remainder.toLocaleString()}만원`;
   }
-  return `${manwon.toLocaleString()}만원`;
+  return `${val.toLocaleString()}만원`;
 }
