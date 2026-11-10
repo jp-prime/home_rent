@@ -56,15 +56,11 @@ export const MapSearch: React.FC<MapSearchProps> = ({
         zoomControl: false,
       });
 
-      // CartoDB Voyager / Positron tiles for clean, modern real-estate map look
-      L.tileLayer(
-        'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
-        {
-          attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
-          maxZoom: 19,
-          subdomains: 'abcd',
-        }
-      ).addTo(map);
+      // OpenStreetMap 무료 표준 지도 타일 (API 키 불필요, 항상 안정적으로 로드됨)
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        maxZoom: 19,
+      }).addTo(map);
 
       // Add Zoom control at top-right
       L.control.zoom({ position: 'topright' }).addTo(map);
